@@ -1,0 +1,19 @@
+{
+  "name": "main_app",
+  "homepage": "http://shel.io/oracle",
+  "version": "1.0.0",
+  "description": "An Oracle JavaScript Extension Toolkit(JET) web app",
+  "dependencies": {
+    "@oracle/oraclejet": "~13.1.0"
+  },
+  "devDependencies": {
+    "fs-extra": "^8.1.0",
+    "glob": "7.2.0",
+    "underscore": "^1.10.2",
+    "@oracle/oraclejet-tooling": "~13.1.0"
+  },
+  "engines": {
+    "node": ">=12.21.0"
+  },
+  "private": true
+}
