@@ -31,7 +31,6 @@ function(accUtils) {
        * and inserted into the DOM and after the View is reconnected
        * after being disconnected.
        */
-       var last_hamburger = 0;
 
       
       
@@ -39,7 +38,6 @@ function(accUtils) {
       this.connected = () => {
         accUtils.announce('Dashboard page loaded.', 'assertive');
         document.title = "Create Order";
-
         
         
         // Implement further logic if needed
@@ -156,38 +154,65 @@ function updateSummary(final_order){
  
 }
 
-// function connect_to_db(){
-//   const http = require("http");
-//   var mysql = require("mysql");
 
-//   var con = mysql.createConnection({
-//   host     : 'server1.shel.io',
-//   user     : 'shel_oracle_food_user',
-//   password : 'shel_oracle_food_user',
-//   database : 'shel_food_database'
-//   });
-//   // Create an instance of the http server to handle HTTP requests
-//   let app = http.createServer((req, res) => {
-//   // Set a response type of plain text for the response
-//   res.writeHead(200, {'Content-Type': 'text/plain'});
+var updated_num_orders;
 
-//   // Send back a response and end the connection
-//   //res.end('Hello World!\n'); // comment this line   
-//   con.connect(function(err) {
-//   if (err) throw err;
-//   res.end('Connected!');
-//   }); 
+function get_num_orders(){
+  var myString = "https://oracle-ojet-restaurant-default-rtdb.firebaseio.com/num_orders.json";
+  $.ajax({
+    url: myString,
+    type: "GET",
+    processData: false,
+    contentType: "application/json; charset=UTF-8",
+    
+  }).done(function(data) {
+    updated_num_orders = data;
+  });
+}
 
-//   });
+function update_num_orders() {
+  get_num_orders();
+  updated_num_orders = updated_num_orders + 1;
+  console.log(updated_num_orders);
 
-//   // Start the server on port 3000
-//   app.listen(3000, '127.0.0.1');
-// }
+  var myString = "https://oracle-ojet-restaurant-default-rtdb.firebaseio.com/num_orders.json";
+  $.ajax({
+    url: myString,
+    type: "PUT",
+    processData: false,
+    contentType: "application/json; charset=UTF-8",
+    data: updated_num_orders
+  }).done(function(data) {
+    console.log("Updated number of orders to: ")
+    console.log(data);
+    
+  });
+};
 
 
 
-// function submit_order(){
-//     connect_to_db();
-// }
 
 
+function submit_order() {
+  get_num_orders();
+  update_num_orders();
+  let data = {
+    item1: burger_val,
+    item2: side_val,
+    item3: drink_val
+  }
+
+  var myString = "https://oracle-ojet-restaurant-default-rtdb.firebaseio.com/order";
+  myString = myString + updated_num_orders +".json";
+  $.ajax({
+    url: myString,
+    type: "PUT",
+    processData: false,
+    contentType: "application/json; charset=UTF-8",
+    data: JSON.stringify(data)
+  }).done(function(data) {
+    console.log("Put to database: ")
+    console.log(data);
+    
+  });
+};

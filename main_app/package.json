@@ -5,6 +5,7 @@
   "description": "An Oracle JavaScript Extension Toolkit(JET) web app",
   "dependencies": {
     "@oracle/oraclejet": "~13.1.0",
+    "axios": "^1.1.3",
     "http": "^0.0.1-security",
     "mysql": "^2.18.1",
     "yarn": "^1.22.19"
