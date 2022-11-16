@@ -1,0 +1,70 @@
+<!--
+ Copyright (c) 2014, 2022, Oracle and/or its affiliates.
+ Licensed under The Universal Permissive License (UPL), Version 1.0
+ as shown at https://oss.oracle.com/licenses/upl/
+ -->
+<div class="oj-hybrid-padding">
+  <h1>Create Customer Order</h1>
+
+  <div class="oj-sm-12 "> 
+    <div class="oj-sm-10 oj-sm-padding-5x-vertical">
+      <div class="oj-panel ">
+        <h3 class=""> Pick Burger </h2>
+        <div class="oj-flex oj-sm-justify-content-space-around">
+            <oj-button onclick="select_hamburger(this)" id ="Hamburger" class="oj-sm-5 oj-sm-padding-2x-horizontal oj-focus-highlight">
+                Hamburger ($7)
+            </oj-button>
+            <oj-button onclick="select_hamburger(this)" id ="Cheeseburger" class="oj-sm-5 oj-sm-padding-2x-horizontal oj-focus-highlight">
+                Cheeseburger ($8)
+            </oj-button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="oj-sm-10 oj-sm-padding-5x-vertical">
+      <div class="oj-panel ">
+        <h3 class=""> Pick Side</h2>
+        <div class="oj-flex oj-sm-justify-content-space-around">
+            <oj-button onclick="select_side(this)" id ="Fries" class="oj-sm-5 oj-sm-padding-2x-horizontal oj-focus-highlight">
+                Fries ($3)
+            </oj-button>
+            <oj-button onclick="select_side(this)" id ="Cheese Fries" class="oj-sm-5 oj-sm-padding-2x-horizontal oj-focus-highlight">
+                Cheese Fries ($4)
+            </oj-button>
+        </div>
+      </div>
+    </div>
+
+    <div class="oj-sm-10 oj-sm-padding-5x-vertical">
+      <div class="oj-panel ">
+        <h3 class=""> Pick Drink</h2>
+        <div class="oj-flex oj-sm-justify-content-space-around">
+            <oj-button onclick="select_drink(this)" id ="Water" class="oj-sm-5 oj-sm-padding-2x-horizontal oj-focus-highlight">
+                Water ($1)
+            </oj-button>
+            <oj-button onclick="select_drink(this)" id ="Soda" class="oj-sm-5 oj-sm-padding-2x-horizontal oj-focus-highlight">
+                Soda ($2)
+            </oj-button>
+        </div>
+      </div>
+    </div>
+  
+
+    <div>
+    <h1 id="order_cost_element"> Order Summary: $</h1>
+    <h3 id="order_summary">No Items Selected</h3>
+    <h3 id="if_burger"></h3>
+    <h3 id="if_side"></h3>
+    <h3 id="if_drink"></h3>
+    </div>
+
+    <oj-button onclick="submit_order()" id ="submit_order_button" class="oj-sm-5 oj-sm-padding-2x-horizontal oj-focus-highlight">
+      Submit Order
+    </oj-button>
+
+
+  </div>
+  
+
+
+</div>
