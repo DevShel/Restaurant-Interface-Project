@@ -22,9 +22,22 @@ define(['../accUtils'],
        * and inserted into the DOM and after the View is reconnected
        * after being disconnected.
        */
+      var burger_item, side, drink;
+
+      function onButtonClick(element){
+        return src
+      }
+
       this.connected = () => {
         accUtils.announce('Customers page loaded.', 'assertive');
         document.title = "Customers";
+
+        require(["require", "exports", "knockout", "ojs/ojbootstrap", "ojs/ojknockout", "ojs/ojbutton"], function (require, exports, ko, Bootstrap) {
+          "use strict";
+          this.burgerValue = ko.obser
+          
+      });
+
         // Implement further logic if needed
       };
 
