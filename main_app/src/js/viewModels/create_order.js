@@ -248,12 +248,13 @@ function submit_order() {
   if (overall_cost > 0 ){
     increase_order_number();
   get_num_orders();
+  const date = new Date();
   let data = {
     item1: burger_val,
     item2: side_val,
     item3: drink_val,
     item4: overall_cost,
-    item5: Date.now()
+    item5: date
   }
 
   var myString = "https://oracle-ojet-restaurant-default-rtdb.firebaseio.com/order";
