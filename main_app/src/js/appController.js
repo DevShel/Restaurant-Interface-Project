@@ -24,10 +24,11 @@ define(['knockout', 'ojs/ojcontext', 'ojs/ojmodule-element-utils', 'ojs/ojknocko
           this.message(event.detail.message);
           this.manner(event.detail.manner);
       };
+      Context.getPageContext().getBusyContext().applicationBootstrapComplete();
 
       document.getElementById('globalBody').addEventListener('announce', announcementHandler, false);
       
-
+      
       // Media queries for repsonsive layouts
       const smQuery = ResponsiveUtils.getFrameworkQuery(ResponsiveUtils.FRAMEWORK_QUERY_KEY.SM_ONLY);
       this.smScreen = ResponsiveKnockoutUtils.createMediaQueryObservable(smQuery);
@@ -35,11 +36,10 @@ define(['knockout', 'ojs/ojcontext', 'ojs/ojmodule-element-utils', 'ojs/ojknocko
       this.mdScreen = ResponsiveKnockoutUtils.createMediaQueryObservable(mdQuery);
 
       let navData = [
-        { path: '', redirect: 'create_order' },
-        { path: 'create_order', detail: { label: 'Create Order', iconClass: 'oj-ux-ico-bar-chart' } },
-        { path: 'incidents', detail: { label: 'Incidents', iconClass: 'oj-ux-ico-fire' } },
-        { path: 'customers', detail: { label: 'Customers', iconClass: 'oj-ux-ico-contact-group' } },
-        { path: 'about', detail: { label: 'About', iconClass: 'oj-ux-ico-information-s' } }
+        { path: '', redirect: 'view_orders'},
+        { path: 'view_orders', detail: { label: 'View Orders', iconClass: 'oj-ux-ico-sales-order' } },
+        { path: 'create_order', detail: { label: 'Create Order', iconClass: 'oj-ux-ico-bar-chart' }  }
+        
       ];
 
       // Router setup
@@ -51,7 +51,7 @@ define(['knockout', 'ojs/ojcontext', 'ojs/ojmodule-element-utils', 'ojs/ojknocko
       this.moduleAdapter = new ModuleRouterAdapter(router);
 
       this.selection = new KnockoutRouterAdapter(router);
-
+      
       // Setup the navDataProvider with the routes, excluding the first redirected
       // route.
       this.navDataProvider = new ArrayDataProvider(navData.slice(1), {keyAttributes: "path"});
@@ -67,9 +67,8 @@ define(['knockout', 'ojs/ojcontext', 'ojs/ojmodule-element-utils', 'ojs/ojknocko
         self.sideDrawerOn(!self.sideDrawerOn());
       }
 
-      function select_hamburger(button){
-        console.log(button.id);
-      }
+      
+      
 
       // Header
       // Application Name used in Branding Area
@@ -83,7 +82,6 @@ define(['knockout', 'ojs/ojcontext', 'ojs/ojmodule-element-utils', 'ojs/ojknocko
 
      // release the application bootstrap busy state
      Context.getPageContext().getBusyContext().applicationBootstrapComplete();
-
      return new ControllerViewModel();
   }
 );

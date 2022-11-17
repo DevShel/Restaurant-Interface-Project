@@ -6,10 +6,10 @@
 <div class="oj-hybrid-padding">
   <h1>Create Customer Order</h1>
 
-  <div class="oj-sm-12 "> 
-    <div class="oj-sm-10 oj-sm-padding-5x-vertical">
-      <div class="oj-panel ">
-        <h3 class=""> Pick Burger </h2>
+  <div class="oj-flex oj-sm-justify-content-center"> 
+    <div class="oj-sm-10 oj-sm-padding-3x-vertical">
+      <div class="oj-panel oj-sm-padding-6x-vertical">
+        <h3 class="oj-sm-padding-12x-horizontal"> Pick Burger </h2>
         <div class="oj-flex oj-sm-justify-content-space-around">
             <oj-button onclick="select_hamburger(this)" id ="Hamburger" class="oj-sm-5 oj-sm-padding-2x-horizontal oj-focus-highlight">
                 Hamburger ($7)
@@ -21,9 +21,9 @@
       </div>
     </div>
     
-    <div class="oj-sm-10 oj-sm-padding-5x-vertical">
-      <div class="oj-panel ">
-        <h3 class=""> Pick Side</h2>
+    <div class="oj-sm-10 oj-sm-padding-3x-vertical">
+      <div class="oj-panel oj-sm-padding-6x-vertical">
+        <h3 class="oj-sm-padding-12x-horizontal"> Pick Side</h2>
         <div class="oj-flex oj-sm-justify-content-space-around">
             <oj-button onclick="select_side(this)" id ="Fries" class="oj-sm-5 oj-sm-padding-2x-horizontal oj-focus-highlight">
                 Fries ($3)
@@ -35,9 +35,9 @@
       </div>
     </div>
 
-    <div class="oj-sm-10 oj-sm-padding-5x-vertical">
-      <div class="oj-panel ">
-        <h3 class=""> Pick Drink</h2>
+    <div class="oj-sm-10 oj-sm-padding-3x-vertical">
+      <div class="oj-panel oj-sm-padding-6x-vertical">
+        <h3 class="oj-sm-padding-12x-horizontal"> Pick Drink</h2>
         <div class="oj-flex oj-sm-justify-content-space-around">
             <oj-button onclick="select_drink(this)" id ="Water" class="oj-sm-5 oj-sm-padding-2x-horizontal oj-focus-highlight">
                 Water ($1)
@@ -50,20 +50,24 @@
     </div>
   
 
-    <div>
-    <h1 id="order_cost_element"> Order Summary: $</h1>
-    <h3 id="order_summary">No Items Selected</h3>
-    <h3 id="if_burger"></h3>
-    <h3 id="if_side"></h3>
-    <h3 id="if_drink"></h3>
+    <div class="oj-sm-10">
+    <h2 id="order_cost_element"> Order Summary: $</h5>
+    <h5 id="order_num" style="margin:0;padding:0;"> Order #</h5>
+    <h5 id="order_summary">No Items Selected</h5>
+    <h5 id="if_burger"></h5>
+    <h5 id="if_side"></h5>
+    <h5 id="if_drink"></h5>
+    
     </div>
-
-    <oj-button onclick="submit_order()" id ="submit_order_button" class="oj-sm-5 oj-sm-padding-2x-horizontal oj-focus-highlight">
+    <oj-button onclick="submit_order()" id ="submit_order_button" class="oj-sm-8 oj-sm-padding-2x-horizontal oj-focus-highlight">
       Submit Order
     </oj-button>
+    <h4 class="oj-sm-8 oj-sm-padding-2x-horizontal oj-focus-highlight" style="color:red" id="buttonAlert"></h4>
+    
+    
 
 
-  </div>
+    </div>    
   
 
 

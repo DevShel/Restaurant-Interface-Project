@@ -11,15 +11,14 @@
 
 
 
-
-
 define(['../accUtils', "require", "exports", "knockout", "ojs/ojbootstrap", "ojs/ojarraydataprovider", 
 "ojs/ojknockout-keyset", "ojs/ojresponsiveutils", "ojs/ojresponsiveknockoututils",
 "ojs/ojknockout", "ojs/ojknockout-keyset", "ojs/ojselector", "ojs/ojlistitemlayout",
  "ojs/ojavatar", "ojs/ojlistview", "ojs/ojactioncard",  "ojs/ojlabel"],
 function(accUtils) {
-
+  
   function OrderViewModel() {
+    
       // Below are a set of the ViewModel methods invoked by the oj-module component.
       // Please reference the oj-module jsDoc for additional information.
 
@@ -34,14 +33,14 @@ function(accUtils) {
 
       
       
-
       this.connected = () => {
-        accUtils.announce('Dashboard page loaded.', 'assertive');
         document.title = "Create Order";
-        
+        get_num_orders();
+        update_order_number_element();
         
         // Implement further logic if needed
-    
+        
+
       };
 
       /**
@@ -49,6 +48,7 @@ function(accUtils) {
        */
       this.disconnected = () => {
         // Implement if needed
+        
       };
 
       /**
@@ -56,9 +56,12 @@ function(accUtils) {
        * That includes any possible animation between the old and the new View.
        */
       this.transitionCompleted = () => {
-        // Implement if needed
+        
       };
+      
     }
+
+    
     
     /*
      * Returns an instance of the ViewModel providing one instance of the ViewModel. If needed,
@@ -68,17 +71,34 @@ function(accUtils) {
     return OrderViewModel;
   }
 
+  
 
   
 );
 
+
+var updated_num_orders ;
 var burger_val, side_val, drink_val;
 var burger_cost = 0, side_cost = 0, drink_cost = 0;
-var overall_cost;
-let final_order = "";
+var overall_cost = 0;
+
+function updateNumOrders(new_number){
+  updated_num_orders = new_number;
+  update_order_number_element();
+}
+
+function update_order_number_element(){
+  if (updateNumOrders){
+      var order_display = updated_num_orders + 1;
+      document.getElementById("order_num").textContent = "Order #" + order_display;
+
+  }
+}
+
 
 function select_hamburger(button){
-  if (burger_val != null){
+  update_order_number_element();
+  if (burger_val){
     document.getElementById(burger_val).chroming = "outlined";
   }
 
@@ -89,12 +109,14 @@ function select_hamburger(button){
     burger_cost = 8.00;
   }
   document.getElementById(burger_val).chroming = "callToAction";
-  updateSummary(final_order);
+  updateSummary();
   
 }
 
+
 function select_side(button){
-  if (side_val != null){
+  update_order_number_element();
+  if (side_val){
     document.getElementById(side_val).chroming = "outlined";
   }
   side_val = button.id;
@@ -106,11 +128,12 @@ function select_side(button){
   }
 
   document.getElementById(side_val).chroming = "callToAction";
-  updateSummary(final_order);
+  updateSummary();
 }
 
 function select_drink(button){
-  if (drink_val != null){
+  update_order_number_element();
+  if (drink_val){
     document.getElementById(drink_val).chroming = "outlined";
   }
   drink_val = button.id;
@@ -122,40 +145,72 @@ function select_drink(button){
   }
   
   document.getElementById(drink_val).chroming = "callToAction";
-  updateSummary(final_order);
+  updateSummary();
 }
 
-function updateSummary(final_order){
+function clear_hamburger(){
+  document.getElementById("Hamburger").chroming = "outlined";
+  document.getElementById("Cheeseburger").chroming = "outlined";
+  burger_val = "";
+  burger_cost = 0;
+  updateSummary();
+}
+
+function clear_side(){
+  document.getElementById("Fries").chroming = "outlined";
+  document.getElementById("Cheese Fries").chroming = "outlined";
+  side_val = "";
+  side_cost = 0;
+  updateSummary();
+}
+
+function clear_drink(){
   
+  document.getElementById("Water").chroming = "outlined";
+  document.getElementById("Soda").chroming = "outlined";
+  drink_val = "";
+  drink_cost = 0;
+  updateSummary();
+}
+
+function updateSummary(){
     if (burger_val){
       document.getElementById("if_burger").textContent = burger_val + " $" + burger_cost;
+    } else{
+      document.getElementById("if_burger").textContent = "";
     }
   
     if (side_val){
       document.getElementById("if_side").textContent = side_val + " $" + side_cost;
+    } else{
+      document.getElementById("if_side").textContent = "";
     }
   
     if (drink_val){
       document.getElementById("if_drink").textContent = drink_val + " $" + drink_cost;
+    } else{
+      document.getElementById("if_drink").textContent = "";
     }
 
     overall_cost = burger_cost + side_cost + drink_cost;
 
   if (order_summary){
-    document.getElementById("order_summary").textContent = final_order;
+    document.getElementById("order_summary").textContent = "";
   }
    else{
     document.getElementById("order_summary").textContent = "No Items Selected";
   }
+
   
-  if (overall_cost > 0 ){
+  if (overall_cost >= 0){
     document.getElementById("order_cost_element").textContent = "Order Summary: $" + overall_cost;
   }
  
 }
 
 
-var updated_num_orders;
+
+
 
 function get_num_orders(){
   var myString = "https://oracle-ojet-restaurant-default-rtdb.firebaseio.com/num_orders.json";
@@ -164,16 +219,14 @@ function get_num_orders(){
     type: "GET",
     processData: false,
     contentType: "application/json; charset=UTF-8",
-    
   }).done(function(data) {
-    updated_num_orders = data;
+    updateNumOrders(data);
   });
 }
 
-function update_num_orders() {
+function increase_order_number() {
   get_num_orders();
   updated_num_orders = updated_num_orders + 1;
-  console.log(updated_num_orders);
 
   var myString = "https://oracle-ojet-restaurant-default-rtdb.firebaseio.com/num_orders.json";
   $.ajax({
@@ -191,15 +244,16 @@ function update_num_orders() {
 
 
 
-
-
 function submit_order() {
+  if (overall_cost > 0 ){
+    increase_order_number();
   get_num_orders();
-  update_num_orders();
   let data = {
     item1: burger_val,
     item2: side_val,
-    item3: drink_val
+    item3: drink_val,
+    item4: overall_cost,
+    item5: Date.now()
   }
 
   var myString = "https://oracle-ojet-restaurant-default-rtdb.firebaseio.com/order";
@@ -215,4 +269,15 @@ function submit_order() {
     console.log(data);
     
   });
+  clear_hamburger();
+  clear_side();
+  clear_drink();
+  } else{
+    document.getElementById("buttonAlert").innerText = "Cannot Submit Empty Order";
+    setTimeout(function(){
+     
+      document.getElementById("buttonAlert").innerText = "";
+    }, 2000);
+  }
+  
 };
