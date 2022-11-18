@@ -18,9 +18,12 @@
     function() {
       function init() {
         // Bind your ViewModel for the content of the whole page body.
-          setTimeout(function(){
-            ko.applyBindings(app, document.getElementById('globalBody'));
-          }, 500);
+          var my_interval = setInterval(function(){
+            if (document.body.getAttribute("finished") == "true"){
+              clearInterval(my_interval);
+              ko.applyBindings(app, document.getElementById('globalBody'));
+            }
+          }, 100);
       }
       // If running in a hybrid (e.g. Cordova) environment, we need to wait for the deviceready
       // event before executing any code that might interact with Cordova APIs or plugins.

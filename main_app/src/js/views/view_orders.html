@@ -1,6 +1,12 @@
 <div class="oj-hybrid-padding">
+  
   <h3 class="oj-header-border" data-bind="text:'View Customer Orders'"></h3>
-  <br />
+  <oj-button onclick="refreshData()" id ="Hamburger" class="oj-sm-3 oj-focus-highlight">
+    Refresh Data
+  </oj-button>
+  <h6  data-bind="text:'Right Click Table To Sort'"></h6>
+  
+
   <oj-table id='t1' data-bind="value:'orderArray'" aria-label='Orders Table' data='[[dataprovider]]' as='cell' columns='{{columnArray}}'
     columns-default='{"template": "cellTemplate", "headerTemplate": "headerTemplate"}' style='width: 100%;'>
     

@@ -9,23 +9,23 @@
  * Your incidents ViewModel code goes here
  */
 
- var is_table_loaded = false;
+var is_table_loaded = false;
 
-define(["ojs/ojarraydataprovider", 'ojs/ojlistdataproviderview', '../accUtils', "require", "exports", "knockout", "ojs/ojbootstrap", 
+define(["ojs/ojarraydataprovider", 'ojs/ojlistdataproviderview', '../accUtils', 
+"require", "exports", "knockout", "ojs/ojbootstrap", 
 "ojs/ojknockout-keyset", "ojs/ojresponsiveutils", "ojs/ojresponsiveknockoututils",
-"ojs/ojknockout", "ojs/ojknockout-keyset", "ojs/ojselector", "ojs/ojlistitemlayout",
- "ojs/ojavatar", "ojs/ojlistview", "ojs/ojactioncard",  "ojs/ojlabel", 'ojs/ojcore', 'jquery', 'ojs/ojtable', 'ojs/ojgauge', 'ojs/ojtimezonedata',
+"ojs/ojknockout", "ojs/ojselector", "ojs/ojlistitemlayout",
+ "ojs/ojavatar", "ojs/ojlistview", "ojs/ojactioncard",  "ojs/ojlabel", 'ojs/ojcore',
+  'jquery', 'ojs/ojtable', 'ojs/ojgauge', 'ojs/ojtimezonedata',
  'ojs/ojvalidation-datetime', 'ojs/ojvalidation-number'],
-function(ArrayDataProvider, ListDataProviderView, oj, ko, $) {
+function(ArrayDataProvider, ListDataProviderView, oj, ko) {
     "use strict";
     function ViewOrdersViewModel() {
       var self = this;
       
       this.dataprovider = new ArrayDataProvider(orderArray, { keyAttributes: "order_number" });
-    //   this.dataproviderView = new ListDataProviderView(this.dataprovider, {
-    //     sortCriteria: [{ attribute: "order_number", direction: "descending" }],
-    // });
-
+    
+        
    
 
       // Initialize array with get request values
@@ -46,7 +46,6 @@ function(ArrayDataProvider, ListDataProviderView, oj, ko, $) {
        
        
       self.connected = function() {
-        console.log("Viewmodel Loaded");
         document.title = "View Orders";
         if (is_table_loaded == false){
           get_num_orders_for_display();
@@ -60,8 +59,7 @@ function(ArrayDataProvider, ListDataProviderView, oj, ko, $) {
        */
       self.disconnected = function() {
         // Implement if needed
-        console.log("view order disconnected");
-        
+
       };
 
       /**
@@ -75,9 +73,7 @@ function(ArrayDataProvider, ListDataProviderView, oj, ko, $) {
       };
     }
     
-    // setTimeout(function(){
-    //   console.log("Viewmodel Loaded");
-    // }, 500);
+    
 
     
 
@@ -118,9 +114,7 @@ this.columnArray = [{
 ];
 
 
-
  function get_num_orders_for_display(){
-  console.log("get_num_orders_for_display called");
   var myString = "https://oracle-ojet-restaurant-default-rtdb.firebaseio.com/num_orders.json";
   $.ajax({
     url: myString,
@@ -136,47 +130,55 @@ this.columnArray = [{
 
 
 function populate_table(updated_val){
-  console.log("populate_table called");
-  for (let i = 1; i <= updated_val; i++){
+
+  function send_request(url, i){
+    return new Promise(resolve=>{
+        $.ajax({
+    url: url,
+    type: "GET",
+    processData: false,
+    contentType: "application/json; charset=UTF-8",
+      }).done(function(data) {
+    let order_num_table, order_items_table = "", order_cost_table, order_time_table, order_date_table;
+
     
-  
-
-    var myString = "https://oracle-ojet-restaurant-default-rtdb.firebaseio.com/order" + i + ".json";
-    $.ajax({
-      url: myString,
-      type: "GET",
-      processData: false,
-      contentType: "application/json; charset=UTF-8",
-    }).done(function(data) {
-      let order_num_table, order_items_table = "", order_cost_table, order_time_table, order_date_table;
-  
-      
-      if (data){
-        if (data.item1){
-          order_items_table += data.item1 + " ";
-        } 
-        if (data.item2){
-          order_items_table+= data.item2 + " ";
-        } 
-        if (data.item3){
-          order_items_table+= data.item3 + " ";
-        }
-        if (data.item4){
-          order_cost_table = data.item4;
-        }
-        if (data.item5){
-          var date = new Date(data.item5);
-          order_time_table = date.toLocaleTimeString("en-US");
-          order_date_table = date.toLocaleDateString("en-US");
-        }
-        addToArray(i, order_items_table, order_cost_table, order_time_table, order_date_table);
+    if (data){
+      if (data.item1){
+        order_items_table += data.item1 + " ";
+      } 
+      if (data.item2){
+        order_items_table+= data.item2 + " ";
+      } 
+      if (data.item3){
+        order_items_table+= data.item3 + " ";
       }
+      if (data.item4){
+        order_cost_table = data.item4;
+      }
+      if (data.item5){
+        var date = new Date(data.item5);
+        order_time_table = date.toLocaleTimeString("en-US");
+        order_date_table = date.toLocaleDateString("en-US");
+      }
+      addToArray(i, order_items_table, order_cost_table, order_time_table, order_date_table);
+    }
+    resolve();
+      });
       
       
-  
-    });
-  }  
+  });
+    
+    
+}
 
+  var request_promises = [];
+  for (let i = 1; i <= updated_val; i++){
+    var urlString = "https://oracle-ojet-restaurant-default-rtdb.firebaseio.com/order" + i + ".json";
+    request_promises.push(send_request(urlString, i));
+  }  
+  Promise.all(request_promises).then(()=>{
+    document.body.setAttribute("finished", true);
+  })
   
 }
 
@@ -194,7 +196,8 @@ function addToArray(order_num_table, order_items_table, order_cost_table, order_
   get_num_orders_for_display();
   is_table_loaded = true;
 }
-console.log("Outside of Frame");
-
+ function refreshThePage(){
+    window.location.href = window.location.href;
+ }   
 
 
