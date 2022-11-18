@@ -18,21 +18,24 @@
     function() {
       function init() {
         // Bind your ViewModel for the content of the whole page body.
+        if (window.location.href.indexOf("create_order") == -1){
           var my_interval = setInterval(function(){
             if (document.body.getAttribute("finished") == "true"){
               clearInterval(my_interval);
               ko.applyBindings(app, document.getElementById('globalBody'));
             }
           }, 100);
+        } else{
+          ko.applyBindings(app, document.getElementById('globalBody'));
+        }
+          
       }
       // If running in a hybrid (e.g. Cordova) environment, we need to wait for the deviceready
       // event before executing any code that might interact with Cordova APIs or plugins.
       if (document.body.classList.contains('oj-hybrid')) {
         document.addEventListener("deviceready", init);
       } else {
-        setTimeout(function(){
           init();
-        }, 500);
       }
     });
     
