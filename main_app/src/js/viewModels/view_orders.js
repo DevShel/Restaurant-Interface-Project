@@ -10,7 +10,6 @@
  */
 
 var is_table_loaded = false;
-
 define(["ojs/ojarraydataprovider", 'ojs/ojlistdataproviderview', '../accUtils', 
 "require", "exports", "knockout", "ojs/ojbootstrap", 
 "ojs/ojknockout-keyset", "ojs/ojresponsiveutils", "ojs/ojresponsiveknockoututils",
@@ -18,7 +17,7 @@ define(["ojs/ojarraydataprovider", 'ojs/ojlistdataproviderview', '../accUtils',
  "ojs/ojavatar", "ojs/ojlistview", "ojs/ojactioncard",  "ojs/ojlabel", 'ojs/ojcore',
   'jquery', 'ojs/ojtable', 'ojs/ojgauge', 'ojs/ojtimezonedata',
  'ojs/ojvalidation-datetime', 'ojs/ojvalidation-number'],
-function(ArrayDataProvider, ListDataProviderView, oj, ko) {
+function(ArrayDataProvider, ko, app) {
     "use strict";
     function ViewOrdersViewModel() {
       var self = this;
@@ -41,8 +40,6 @@ function(ArrayDataProvider, ListDataProviderView, oj, ko) {
        * and inserted into the DOM and after the View is reconnected 
        * after being disconnected.
        */
-
-
        
        
       self.connected = function() {
@@ -52,6 +49,7 @@ function(ArrayDataProvider, ListDataProviderView, oj, ko) {
           is_table_loaded = true;
         }
         
+        
       };
 
       /**
@@ -59,7 +57,7 @@ function(ArrayDataProvider, ListDataProviderView, oj, ko) {
        */
       self.disconnected = function() {
         // Implement if needed
-
+        
       };
 
       /**
@@ -68,6 +66,8 @@ function(ArrayDataProvider, ListDataProviderView, oj, ko) {
        */
       self.transitionCompleted = function() {
         // Implement if needed
+        
+        
         
         
       };
@@ -86,6 +86,8 @@ function(ArrayDataProvider, ListDataProviderView, oj, ko) {
     return new ViewOrdersViewModel();
   }
 );
+
+
 
 var already_loaded = false;
 var orderArray = [];
@@ -112,6 +114,11 @@ this.columnArray = [{
   "field": "order_date",
 }
 ];
+
+
+function loadTableOnSwitch(){
+  console.log("hi");
+}
 
 
  function get_num_orders_for_display(){

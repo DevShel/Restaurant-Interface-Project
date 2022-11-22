@@ -282,3 +282,7 @@ function submit_order() {
   }
   
 };
+
+function refreshThePage(){
+    window.location.href = window.location.href;
+ }   

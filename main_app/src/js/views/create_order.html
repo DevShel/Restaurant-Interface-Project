@@ -4,54 +4,73 @@
  as shown at https://oss.oracle.com/licenses/upl/
  -->
 <div class="oj-hybrid-padding">
-  <h1>Create Customer Order</h1>
+  <h3 class="oj-header-border oj-flex oj-sm-justify-content-center">Create Customer Order</h3>
 
   <div class="oj-flex oj-sm-justify-content-center"> 
     <div class="oj-sm-10 oj-sm-padding-3x-vertical">
-      <div class="oj-panel oj-sm-padding-6x-vertical">
-        <h3 class="oj-sm-padding-12x-horizontal"> Pick Burger </h2>
-        <div class="oj-flex oj-sm-justify-content-space-around">
-            <oj-button onclick="select_hamburger(this)" id ="Hamburger" class="oj-sm-5 oj-sm-padding-2x-horizontal oj-focus-highlight">
+      <div class="oj-panel oj-sm-padding-5x-bottom">
+        <div class="oj-flex oj-sm-justify-content-space-between"> 
+          <h3 class="oj-sm-padding-12x-start oj-sm-padding-6x-end oj-sm-padding-6x-bottom">Pick Burger</h3>
+          <oj-button onclick="clear_hamburger()" id ="clear_water_button" class="oj-sm-3 oj-md-3 oj-lg-padding-11x-end oj-md-padding-8x-end oj-sm-padding-6x-end oj-sm-padding-5x-top">
+            Reset Selection
+          </oj-button>
+        </div>
+        
+         <div class="oj-flex oj-sm-justify-content-space-around">
+            <oj-button onclick="select_hamburger(this)" id ="Hamburger" class="oj-sm-5 oj-sm-padding-2x-horizontal">
                 Hamburger ($7)
             </oj-button>
-            <oj-button onclick="select_hamburger(this)" id ="Cheeseburger" class="oj-sm-5 oj-sm-padding-2x-horizontal oj-focus-highlight">
+            <oj-button onclick="select_hamburger(this)" id ="Cheeseburger" class="oj-sm-5 oj-sm-padding-2x-horizontal">
                 Cheeseburger ($8)
             </oj-button>
+          </div>
+      </div>
+    </div>
+
+    <div class="oj-sm-10 oj-sm-padding-3x-vertical">
+      <div class="oj-panel oj-sm-padding-5x-bottom">
+        <div class="oj-flex oj-sm-justify-content-space-between"> 
+          <h3 class="oj-sm-padding-12x-start oj-sm-padding-6x-end oj-sm-padding-6x-bottom">Pick Side</h3>
+          <oj-button onclick="clear_side()" id ="clear_water_button" class="oj-sm-3 oj-md-3 oj-lg-padding-11x-end oj-md-padding-8x-end oj-sm-padding-6x-end oj-sm-padding-5x-top">
+            Reset Selection
+          </oj-button>
         </div>
+        
+         <div class="oj-flex oj-sm-justify-content-space-around">
+            <oj-button onclick="select_side(this)" id ="Fries" class="oj-sm-5 oj-sm-padding-2x-horizontal">
+                Fries ($3)
+            </oj-button>
+            <oj-button onclick="select_side(this)" id ="Cheese Fries" class="oj-sm-5 oj-sm-padding-2x-horizontal">
+                Cheese Fries ($4)
+            </oj-button>
+          </div>
+      </div>
+    </div>
+
+    <div class="oj-sm-10 oj-sm-padding-3x-vertical">
+      <div class="oj-panel oj-sm-padding-5x-bottom">
+        <div class="oj-flex oj-sm-justify-content-space-between"> 
+          <h3 class="oj-sm-padding-12x-start oj-sm-padding-6x-end oj-sm-padding-6x-bottom">Pick Drink</h3>
+          <oj-button onclick="clear_drink()" id ="clear_water_button" class="oj-sm-3 oj-md-3 oj-lg-padding-11x-end oj-md-padding-8x-end oj-sm-padding-6x-end oj-sm-padding-5x-top">
+            Reset Selection
+          </oj-button>
+        </div>
+        
+         <div class="oj-flex oj-sm-justify-content-space-around">
+            <oj-button onclick="select_drink(this)" id ="Water" class="oj-sm-5 oj-sm-padding-2x-horizontal">
+                Water ($1)
+            </oj-button>
+            <oj-button onclick="select_drink(this)" id ="Soda" class="oj-sm-5 oj-sm-padding-2x-horizontal">
+                Soda ($2)
+            </oj-button>
+          </div>
       </div>
     </div>
     
-    <div class="oj-sm-10 oj-sm-padding-3x-vertical">
-      <div class="oj-panel oj-sm-padding-6x-vertical">
-        <h3 class="oj-sm-padding-12x-horizontal"> Pick Side</h2>
-        <div class="oj-flex oj-sm-justify-content-space-around">
-            <oj-button onclick="select_side(this)" id ="Fries" class="oj-sm-5 oj-sm-padding-2x-horizontal oj-focus-highlight">
-                Fries ($3)
-            </oj-button>
-            <oj-button onclick="select_side(this)" id ="Cheese Fries" class="oj-sm-5 oj-sm-padding-2x-horizontal oj-focus-highlight">
-                Cheese Fries ($4)
-            </oj-button>
-        </div>
-      </div>
-    </div>
-
-    <div class="oj-sm-10 oj-sm-padding-3x-vertical">
-      <div class="oj-panel oj-sm-padding-6x-vertical">
-        <h3 class="oj-sm-padding-12x-horizontal"> Pick Drink</h2>
-        <div class="oj-flex oj-sm-justify-content-space-around">
-            <oj-button onclick="select_drink(this)" id ="Water" class="oj-sm-5 oj-sm-padding-2x-horizontal oj-focus-highlight">
-                Water ($1)
-            </oj-button>
-            <oj-button onclick="select_drink(this)" id ="Soda" class="oj-sm-5 oj-sm-padding-2x-horizontal oj-focus-highlight">
-                Soda ($2)
-            </oj-button>
-        </div>
-      </div>
-    </div>
   
 
     <div class="oj-sm-10">
-    <h2 id="order_cost_element"> Order Summary: $</h5>
+    <h2 id="order_cost_element"> Order Summary: $0</h5>
     <h5 id="order_num" style="margin:0;padding:0;"> Order #</h5>
     <h5 id="order_summary">No Items Selected</h5>
     <h5 id="if_burger"></h5>
@@ -63,9 +82,6 @@
       Submit Order
     </oj-button>
     <h4 class="oj-sm-8 oj-sm-padding-2x-horizontal oj-focus-highlight" style="color:red" id="buttonAlert"></h4>
-    
-    
-
 
     </div>    
   
